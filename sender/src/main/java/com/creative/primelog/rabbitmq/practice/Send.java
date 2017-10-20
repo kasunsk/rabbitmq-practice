@@ -28,10 +28,15 @@ public class Send {
 
         String message = "Hello World !";
 
-        channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-
-        System.out.println(" [x] send ' " + message +" '");
-
+        for (int i = 0; i < 30; i++) {
+            try {
+                Thread.sleep(1000);
+                channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+                System.out.println(" [x] send ' " + message + " '");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         channel.close();
         connection.close();
     }
